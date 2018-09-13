@@ -37,6 +37,17 @@ RUN mkdir /etc/julia && \
 
 USER $NB_USER
 
+RUN julia -e 'import Pkg; Pkg.update()' && \
+    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    julia -e 'import Pkg; Pkg.add("Gadfly")' && \
+    julia -e 'import Pkg; Pkg.add("RDatasets")' && \
+    julia -e 'import Pkg; Pkg.add("IJulia")' && \
+    julia -e 'using IJulia' && \
+    mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    rm -rf $HOME/.local && \
+    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
+
 RUN conda install --quiet --yes \
     'rpy2=2.8*' \
     'r-plyr=1.8*' \
@@ -79,30 +90,15 @@ RUN conda install --quiet --yes \
     'r-effects=4.0*' \
     'r-pracma=2.0.4' \
     'r-boot=1.3*' \
-    'r-tensorflow=1.8' \
     'r-proc=1.12.1' \
+    'tensorflow=1.5*' \
+    'keras=2.1*' && \
+    'r-tensorflow=1.8' \
   && conda clean -tipsy \
-  && fix-permissions $CONDA_DIR
+  && fix-permissions $CONDA_DIR \
+  && fix-permissions /home/$NB_USER
 
 RUN Rscript -e 'update.packages(ask=FALSE, repos="https://cran.r-project.org")' \
   && Rscript -e 'install.packages(c("sensitivity", "xgboost"), repos="https://cran.r-project.org")' \
   && Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("GenomicRanges", "gRbase"))'
-
-RUN julia -e 'import Pkg; Pkg.update()' && \
-    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
-    julia -e 'import Pkg; Pkg.add("Gadfly")' && \
-    julia -e 'import Pkg; Pkg.add("RDatasets")' && \
-    julia -e 'import Pkg; Pkg.add("IJulia")' && \
-    julia -e 'using IJulia' && \
-    mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
-    chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local && \
-    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
-
-RUN conda install --quiet --yes \
-    'tensorflow=1.5*' \
-    'keras=2.1*' && \
-    conda clean -tipsy && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
 
