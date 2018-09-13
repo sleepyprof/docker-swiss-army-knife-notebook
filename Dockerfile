@@ -79,6 +79,8 @@ RUN conda install --quiet --yes \
     'r-effects=4.0*' \
     'r-pracma=2.0.4' \
     'r-boot=1.3*' \
+    'r-tensorflow=1.8' \
+    'r-proc=1.12.1' \
   && conda clean -tipsy \
   && fix-permissions $CONDA_DIR
 
