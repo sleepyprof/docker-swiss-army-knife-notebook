@@ -92,7 +92,7 @@ RUN conda install --quiet --yes \
     'r-boot=1.3*' \
     'r-proc=1.12.1' \
     'tensorflow=1.5*' \
-    'keras=2.1*' && \
+    'keras=2.1*' \
     'r-tensorflow=1.8' \
   && conda clean -tipsy \
   && fix-permissions $CONDA_DIR \
