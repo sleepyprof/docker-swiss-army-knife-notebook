@@ -99,6 +99,6 @@ RUN conda install --quiet --yes \
   && fix-permissions /home/$NB_USER
 
 RUN Rscript -e 'update.packages(ask=FALSE, repos="https://cran.r-project.org")' \
-  && Rscript -e 'install.packages(c("sensitivity", "xgboost"), repos="https://cran.r-project.org")' \
+  && Rscript -e 'install.packages(c("sensitivity", "xgboost", "parsedate"), repos="https://cran.r-project.org")' \
   && Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("GenomicRanges", "gRbase"))'
 
