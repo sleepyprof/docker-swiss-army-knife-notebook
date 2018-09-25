@@ -94,6 +94,7 @@ RUN conda install --quiet --yes \
     'tensorflow=1.5*' \
     'keras=2.1*' \
     'r-tensorflow=1.8' \
+    'tabulate=0.8.2' \
   && conda clean -tipsy \
   && fix-permissions $CONDA_DIR \
   && fix-permissions /home/$NB_USER
