@@ -1,4 +1,4 @@
-FROM jupyter/all-spark-notebook:137a295ff71b 
+FROM jupyter/all-spark-notebook:1145fb1198b2 
 
 # Combines jupyter/all-spark-notebook, jupyter/datascience-notebook and jupyter/tensorflow-notebook
 # See Dockerfiles for above notebooks
