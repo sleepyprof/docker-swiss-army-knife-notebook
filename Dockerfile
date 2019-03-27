@@ -90,6 +90,7 @@ RUN conda install --quiet --yes \
     'r-corrplot=0.84*' \
     'r-gplots=3.0.1*' \
     'r-e1071=1.7*' \
+    'r-kernlab=0.9*' \
     'r-lars=1.2*' \
     'r-reshape=0.8.8*' \
     'r-rsm=2.10*' \
